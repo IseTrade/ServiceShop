@@ -1,0 +1,258 @@
+﻿@model ServiceShop.Models.Service
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Service</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MotherBoard)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MotherBoard)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MotherBoardPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MotherBoardPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VideoCard)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VideoCard)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VideoCardPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VideoCardPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PowerSupply)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PowerSupply)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PowerSupplyPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PowerSupplyPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cpu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cpu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CpuPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CpuPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HardDrive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HardDrive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HardDrivePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HardDrivePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Case)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Case)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CasePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CasePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Memory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Memory)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemoryPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemoryPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FanPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FanPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CpuCooler)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CpuCooler)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CpuCoolerPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CpuCoolerPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VirusRemoval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VirusRemoval)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataRecovery)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataRecovery)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InstallOs)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InstallOs)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Labor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Labor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkOrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkOrderDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WorkOrderStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WorkOrderStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PictureUpload)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PictureUpload)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustomerId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
