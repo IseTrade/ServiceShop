@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServiceShop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,16 @@ namespace ServiceShop.Controllers
 {
     public class ServicesController : Controller
     {
+        public ApplicationDbContext db;
+        public ApplicationUser user;
+        public ServicesController()
+        {
+            db = new ApplicationDbContext();
+            user = new ApplicationUser();
+        }
         // GET: Services
         public ActionResult Index()
-        {
+        { 
             return View();
         }
 

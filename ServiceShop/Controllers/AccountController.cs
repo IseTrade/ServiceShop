@@ -23,7 +23,7 @@ namespace ServiceShop.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -35,9 +35,9 @@ namespace ServiceShop.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -80,15 +80,34 @@ namespace ServiceShop.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    //User logged in
+                    //return RedirectToLocal(returnUrl);
+                    return RedirectToAction("RedirectLogin");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
+                    //Fall through
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
+            }
+        }
+
+        public ActionResult RedirectLogin(string returnUrl)
+        {
+            if (User.IsInRole("Customer"))
+            {
+                return RedirectToAction("Index", "Customers");
+            }
+            else if (User.IsInRole("Employee"))
+            {
+                return RedirectToAction("Index", "Employees");
+            }
+            else
+            {
+                return RedirectToLocal(returnUrl);
             }
         }
 
@@ -121,7 +140,7 @@ namespace ServiceShop.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -156,15 +175,20 @@ namespace ServiceShop.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await this.UserManager.AddToRolesAsync(user.Id, model.UserRole);
+                    //    return RedirectToAction("Index", "Home");
+                    UserManager.AddToRole(user.Id, "Customer");
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    if (model.UserRole == "Customer")
+                    {
+                        return RedirectToAction("Create", "Customers");
+                    }
+                    else if (model.UserRole == "Employee")
+                    {
+                        return RedirectToAction("Create", "Employees");
+                    }
 
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    await this.UserManager.AddToRolesAsync(user.Id, model.UserRole);
-                        return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
@@ -172,6 +196,28 @@ namespace ServiceShop.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        private void CreateCustomer(ApplicationUser user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Customer customer = new Customer()
+            {
+                ApplicationUserId = user.Id,
+            };
+            db.Customers.Add(customer);
+            db.SaveChanges();
+        }
+        private void CreateEmployee(ApplicationUser user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            Employee employee = new Employee()
+            {
+                ApplicationUserId = user.Id,
+            };
+            db.Employees.Add(employee);
+            db.SaveChanges();
+        }
+
 
         //
         // GET: /Account/ConfirmEmail
@@ -443,6 +489,33 @@ namespace ServiceShop.Controllers
                 ModelState.AddModelError("", error);
             }
         }
+
+
+
+        private ActionResult RedirectToLocal(ApplicationUser user)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var currentUserId = User.Identity.GetUserId();
+
+            if (UserManager.IsInRole(user.Id, "Customer"))
+            {
+                var pickCustomer = db.Customers.FirstOrDefault(c => c.ApplicationUserId == currentUserId);
+                //var selectedCustomer = db.Customers.SingleOrDefault(c => c.ApplicationCustId == user.Id);
+                return RedirectToAction("Index", "Customers", new { id = pickCustomer.Id });
+            }
+            else if (UserManager.IsInRole(user.Id, "Employee"))
+            {
+                var pickEmployee = db.Employees.FirstOrDefault(e => e.ApplicationUserId == currentUserId);
+                return RedirectToAction("Index", "Employees", new { id = pickEmployee.Id });
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+        }
+
+
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
