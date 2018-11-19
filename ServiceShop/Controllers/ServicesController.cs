@@ -1,4 +1,5 @@
-﻿using ServiceShop.Models;
+﻿using Microsoft.AspNet.Identity;
+using ServiceShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,43 @@ namespace ServiceShop.Controllers
             db = new ApplicationDbContext();
             user = new ApplicationUser();
         }
+
+        //==========================================
+        //GET: Customers/Create
+        public ActionResult CreateOrder()
+        {
+            var user = User.Identity.GetUserId();
+            Service service = new Service();
+            return View(service);
+        }
+
+        // POST: Customers/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateOrder([Bind(Include = "Id,WorkOrderDate,Descriptions,PictureUpload")] Service service)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                var currentCust = db.Customers.Where(c => c.ApplicationUserId == userId).FirstOrDefault();
+                var tempEmp = db.Employees.Where(e => e.Email == "ua@gmail.com").FirstOrDefault();
+                service.CustomerId = currentCust.Id;
+                service.EmployeeId = tempEmp.Id;
+                db.Services.Add(service);
+                db.SaveChanges();
+                //return RedirectToAction("Index");
+                return RedirectToAction("Index", "Customers", new { id = 11 });
+
+            }
+
+            return View("Index");
+        }
+
+        //=============================================
+
+
+
         // GET: Services
         public ActionResult Index()
         { 

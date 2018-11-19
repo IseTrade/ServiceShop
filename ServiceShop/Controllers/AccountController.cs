@@ -17,7 +17,7 @@ namespace ServiceShop.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        ApplicationDbContext db = new ApplicationDbContext();
+        readonly ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -97,7 +97,9 @@ namespace ServiceShop.Controllers
 
         public ActionResult RedirectLogin(string returnUrl)
         {
+
             if (User.IsInRole("Customer"))
+            
             {
                 return RedirectToAction("Index", "Customers");
             }
@@ -109,6 +111,7 @@ namespace ServiceShop.Controllers
             {
                 return RedirectToLocal(returnUrl);
             }
+
         }
 
         //
@@ -178,14 +181,16 @@ namespace ServiceShop.Controllers
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     //await this.UserManager.AddToRolesAsync(user.Id, model.UserRole);
                     //    return RedirectToAction("Index", "Home");
-                    UserManager.AddToRole(user.Id, "Customer");
+                    
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     if (model.UserRole == "Customer")
                     {
+                        UserManager.AddToRole(user.Id, "Customer");
                         return RedirectToAction("Create", "Customers");
                     }
                     else if (model.UserRole == "Employee")
                     {
+                        UserManager.AddToRole(user.Id, "Employee");
                         return RedirectToAction("Create", "Employees");
                     }
 
