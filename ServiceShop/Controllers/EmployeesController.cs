@@ -26,8 +26,11 @@ namespace ServiceShop.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var empList = db.Employees.ToList();
-            return View(empList);
+            //var empList = db.Employees.ToList();
+            //return View(empList);
+            var UserId = User.Identity.GetUserId();
+            var emp = db.Employees.Where(c => c.ApplicationUserId == UserId).ToList();
+            return View(emp);
 
         }
 

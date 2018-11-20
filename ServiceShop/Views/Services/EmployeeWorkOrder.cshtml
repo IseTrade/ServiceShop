@@ -1,10 +1,10 @@
 ﻿@model ServiceShop.Models.Service
 
 @{
-    ViewBag.Title = "CreateOrder";
+    ViewBag.Title = "EmployeeWorkOrder";
 }
 
-<h2>CreateOrder</h2>
+<h2>EmployeeWorkOrder</h2>
 
 
 @using (Html.BeginForm()) 
@@ -15,7 +15,7 @@
         <h4>Service</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*<div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.MotherBoard, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.MotherBoard, new { htmlAttributes = new { @class = "form-control" } })
@@ -205,7 +205,7 @@
                 @Html.EditorFor(model => model.PaymentStatus, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PaymentStatus, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.WorkOrderDate, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -215,13 +215,13 @@
             </div>
         </div>
 
-        @*<div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.WorkOrderStatus, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.WorkOrderStatus, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.WorkOrderStatus, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -238,6 +238,23 @@
                 @Html.ValidationMessageFor(model => model.PictureUpload, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.CustomerId, "CustomerId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CustomerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EmployeeId, "EmployeeId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("EmployeeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EmployeeId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -246,10 +263,9 @@
     </div>
 }
 
-    <div>
-        @*@Html.ActionLink("Back to List", "Index")*@
-        @Html.ActionLink("Back to List", "Index", "Customers", null, new { id = 14 })
-    </div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

@@ -19,7 +19,7 @@ namespace ServiceShop.Controllers
         }
 
         //==========================================
-        //GET: Customers/Create
+        //GET: Customers/CreateOrder
         public ActionResult CreateOrder()
         {
             var user = User.Identity.GetUserId();
@@ -27,7 +27,7 @@ namespace ServiceShop.Controllers
             return View(service);
         }
 
-        // POST: Customers/Create
+        // POST: Customers/CreateOrder
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateOrder([Bind(Include = "Id,WorkOrderDate,Descriptions,PictureUpload")] Service service)
@@ -52,6 +52,41 @@ namespace ServiceShop.Controllers
 
         //=============================================
 
+        //GET: Employees/EmployeeWorkOrder
+        public ActionResult EmployeeWorkOrder()
+        {
+            var user = User.Identity.GetUserId();
+            Service service = new Service();
+            return View(service);
+        }
+
+        // POST: Employees/EmployeeWorkOrder
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EmployeeWorkOrder([Bind(Include = "Id,MotherBoard,MotherBoardPrice,VideoCard,VideoCardPrice,PowerSupply,PowerSupplyPrice,Cpu,CpuPrice,HardDrive,HardDrivePrice,Case,CasePrice,Memory,MemoryPrice,Fan,FanPrice,CpuCooler,CpuCoolerPrice,VirusRemoval,DataRecovery,InstallOs,Labor,Comment,PaymentStatus,WorkOrderStatus")] Service service)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                var currentEmp = db.Employees.Where(e => e.ApplicationUserId == userId).FirstOrDefault();
+                var tempEmp = db.Employees.Where(e => e.Email == "ua@gmail.com").FirstOrDefault();
+                var currentCust = db.Customers.Where(c => c.Id == service.CustomerId).FirstOrDefault();
+                //service.CustomerId = currentCust.Id;
+                //service.EmployeeId = tempEmp.Id;
+                service.EmployeeId = currentEmp.Id;
+                db.Services.Add(service);
+                db.SaveChanges();
+                //return RedirectToAction("Index");
+                return RedirectToAction("Index", "Employees", new { id = 11 });
+
+            }
+
+            return View("Index");
+        }
+
+
+        //================================================
 
 
         // GET: Services

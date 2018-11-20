@@ -35,7 +35,7 @@ namespace ServiceShop.Models
         public double? Labor { get; set; }
         public string Comment { get; set; }
         public string PaymentStatus { get; set; }
-        public DateTime WorkOrderDate { get; set; }
+        public DateTime? WorkOrderDate { get; set; }
         public string WorkOrderStatus { get; set; }
         public string Description { get; set; }
         public string PictureUpload { get; set; }
