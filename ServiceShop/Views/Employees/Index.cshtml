@@ -41,9 +41,12 @@
             @Html.DisplayFor(modelItem => item.ApplicationUserId)
         </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+            @Html.ActionLink("CustomerList", "CustomerList", "Customers", null, new { id = item.Id }) |
+            @*@Html.ActionLink("EmployeeWorkOrder", "EmployeeWorkOrder", "Services", null, new { id = item.Id }) |*@
+            @Html.ActionLink("Services", "Index", "Services", null, new { id = item.Id })
         </td>
     </tr>
 }

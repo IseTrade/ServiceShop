@@ -22,7 +22,7 @@ namespace ServiceShop.Controllers
 
         // GET: Customers
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index() //This brings up only customer who's currently logged in.
         {
             //var custList = db.Customers.ToList();
             //return View(custList);
@@ -37,6 +37,14 @@ namespace ServiceShop.Controllers
             return View(cust);
 
 
+        }
+
+        // GET: Customers
+        [HttpGet]
+        public ActionResult CustomerList()  // This brings up all customers for employee
+        {
+            var custList = db.Customers.ToList();
+            return View(custList);
         }
 
         // GET: Customers/Details/5

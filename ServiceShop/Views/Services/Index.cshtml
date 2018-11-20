@@ -96,10 +96,10 @@
             @Html.DisplayNameFor(model => model.PictureUpload)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CustomerId)
+            @*@Html.DisplayNameFor(model => model.CustomerId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EmployeeId)
+            @Html.DisplayNameFor(model => model.EmployeeId)*@
         </th>
         <th></th>
     </tr>
@@ -191,13 +191,13 @@
             @Html.DisplayFor(modelItem => item.PictureUpload)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CustomerId)
+            @*@Html.DisplayFor(modelItem => item.CustomerId)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.EmployeeId)
+            @Html.DisplayFor(modelItem => item.EmployeeId)*@
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Edit", "EmployeeWorkOrder", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Id })
         </td>
