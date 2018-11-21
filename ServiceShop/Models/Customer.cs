@@ -11,6 +11,7 @@ namespace ServiceShop.Models
     {
         [Key]
         public int Id { get; set; }   //Primary key
+        [Display(Name = "Customer Name")]
         public string Name { get; set; }
         public string Address { get; set; }
         public string City { get; set; }

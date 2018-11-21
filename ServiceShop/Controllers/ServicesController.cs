@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -58,7 +59,7 @@ namespace ServiceShop.Controllers
         {
             var user = User.Identity.GetUserId();
             Service service = db.Services.Where(s => s.Id == id).Single();
-            return View(service); 
+            return View(service);
         }
 
         // POST: Employees/EmployeeWorkOrder
@@ -94,7 +95,7 @@ namespace ServiceShop.Controllers
 
         // GET: Services
         public ActionResult Index()
-        { 
+        {
             return View(db.Services.ToList());
         }
 
@@ -102,7 +103,23 @@ namespace ServiceShop.Controllers
         public ActionResult Details(int? id)
         {
             Service service = db.Services.Find(id);
-            return View(service);
+            //Service serviceTest = db.Services.Where(s => s.Id == id).Include(s => s.Employee).Include(s => s.Customer).FirstOrDefault();
+
+            CustomerEmployeeServiceVM cesVM = new CustomerEmployeeServiceVM();
+            cesVM.service = service;
+            cesVM.employee = db.Employees.Where(e => e.Id == service.EmployeeId).First();
+            cesVM.customer = db.Customers.Where(c => c.Id == service.CustomerId).First();
+            var SubTotal = Convert.ToDouble(service.MotherBoardPrice) + Convert.ToDouble(service.VideoCardPrice) + Convert.ToDouble(service.PowerSupplyPrice) + Convert.ToDouble(service.CpuCoolerPrice) + Convert.ToDouble(service.HardDrivePrice)+ Convert.ToDouble(service.CasePrice) + Convert.ToDouble(service.MemoryPrice) + Convert.ToDouble(service.FanPrice) + Convert.ToDouble(service.CpuCoolerPrice) + Convert.ToDouble(service.VirusRemoval) + Convert.ToDouble(service.DataRecovery) + Convert.ToDouble(service.InstallOs) + Convert.ToDouble(service.Labor);
+
+            var Diagnostics = 40.00;
+            var Taxes = SubTotal * 0.056;
+            var TotalBill = SubTotal + Diagnostics + Taxes;
+            ViewBag.SubTotal = SubTotal;
+            ViewBag.Diagnostics = Diagnostics;
+            ViewBag.Taxes = Taxes;
+            ViewBag.TotalBill = TotalBill;
+
+            return View(cesVM);
         }
 
         // GET: Services/Create
@@ -150,25 +167,51 @@ namespace ServiceShop.Controllers
         }
 
         // GET: Services/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            //Service service = db.Services.Find(id);
+            ////Service serviceTest = db.Services.Where(s => s.Id == id).Include(s => s.Employee).Include(s => s.Customer).FirstOrDefault();
+
+            //CustomerEmployeeServiceVM cesVM = new CustomerEmployeeServiceVM();
+            //cesVM.service = service;
+            //cesVM.employee = db.Employees.Where(e => e.Id == service.EmployeeId).First();
+            //cesVM.customer = db.Customers.Where(c => c.Id == service.CustomerId).First();
+
+            //return View(cesVM);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Service service = db.Services.Find(id);
+            if (service == null)
+            {
+                return HttpNotFound();
+            }
+            return View(service);
         }
 
         // POST: Services/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            //try
+            //{
+            //    // TODO: Add delete logic here
 
+            //    return RedirectToAction("Index");
+            //}
+            //catch
+            //{
+            //    return View();
+            //}
+
+            {
+                Service service = db.Services.Find(id);
+                db.Services.Remove(service);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
         }
     }
 }

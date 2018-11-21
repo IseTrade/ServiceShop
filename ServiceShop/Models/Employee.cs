@@ -11,6 +11,7 @@ namespace ServiceShop.Models
     {
         [Key]
         public int Id { get; set; }   //Primary key
+        [Display(Name = "Employee Name")]
         public string Name { get; set; }
         public string Email { get; set; }
         public double? Rating { get; set; }

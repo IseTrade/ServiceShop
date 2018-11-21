@@ -1,4 +1,5 @@
-﻿@model ServiceShop.Models.Service
+﻿@*@model ServiceShop.Models.Service*@
+@model ServiceShop.Models.CustomerEmployeeServiceVM
 
 @{
     ViewBag.Title = "Details";
@@ -11,248 +12,258 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Customer.Name)
+            @Html.DisplayNameFor(model => model.customer.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Customer.Name)
+            @Html.DisplayFor(model => model.customer.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Employee.Name)
+            @Html.DisplayNameFor(model => model.employee.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Employee.Name)
+            @Html.DisplayFor(model => model.employee.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MotherBoard)
+            @Html.DisplayNameFor(model => model.service.MotherBoard)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MotherBoard)
+            @Html.DisplayFor(model => model.service.MotherBoard)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MotherBoardPrice)
+            @Html.DisplayNameFor(model => model.service.MotherBoardPrice)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MotherBoardPrice)
+            @Html.DisplayFor(model => model.service.MotherBoardPrice)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.VideoCard)
+            @Html.DisplayNameFor(model => model.service.VideoCard)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.VideoCard)
+            @Html.DisplayFor(model => model.service.VideoCard)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.VideoCardPrice)
+            @Html.DisplayNameFor(model => model.service.VideoCardPrice)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.VideoCardPrice)
+            @Html.DisplayFor(model => model.service.VideoCardPrice)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PowerSupply)
+            @Html.DisplayNameFor(model => model.service.PowerSupply)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PowerSupply)
+            @Html.DisplayFor(model => model.service.PowerSupply)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PowerSupplyPrice)
+            @Html.DisplayNameFor(model => model.service.PowerSupplyPrice)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PowerSupplyPrice)
+            @Html.DisplayFor(model => model.service.PowerSupplyPrice)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Cpu)
+            @Html.DisplayNameFor(model => model.service.Cpu)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Cpu)
+            @Html.DisplayFor(model => model.service.Cpu)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CpuPrice)
+            @Html.DisplayNameFor(model => model.service.CpuPrice)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CpuPrice)
+            @Html.DisplayFor(model => model.service.CpuPrice)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.HardDrive)
+            @Html.DisplayNameFor(model => model.service.HardDrive)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.HardDrive)
+            @Html.DisplayFor(model => model.service.HardDrive)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.HardDrivePrice)
+            @Html.DisplayNameFor(model => model.service.HardDrivePrice)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.HardDrivePrice)
+            @Html.DisplayFor(model => model.service.HardDrivePrice)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Case)
+            @Html.DisplayNameFor(model => model.service.Case)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Case)
+            @Html.DisplayFor(model => model.service.Case)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CasePrice)
+            @Html.DisplayNameFor(model => model.service.CasePrice)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CasePrice)
+            @Html.DisplayFor(model => model.service.CasePrice)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Memory)
+            @Html.DisplayNameFor(model => model.service.Memory)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Memory)
+            @Html.DisplayFor(model => model.service.Memory)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MemoryPrice)
+            @Html.DisplayNameFor(model => model.service.MemoryPrice)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MemoryPrice)
+            @Html.DisplayFor(model => model.service.MemoryPrice)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Fan)
+            @Html.DisplayNameFor(model => model.service.Fan)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Fan)
+            @Html.DisplayFor(model => model.service.Fan)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FanPrice)
+            @Html.DisplayNameFor(model => model.service.FanPrice)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FanPrice)
+            @Html.DisplayFor(model => model.service.FanPrice)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CpuCooler)
+            @Html.DisplayNameFor(model => model.service.CpuCooler)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CpuCooler)
+            @Html.DisplayFor(model => model.service.CpuCooler)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CpuCoolerPrice)
+            @Html.DisplayNameFor(model => model.service.CpuCoolerPrice)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CpuCoolerPrice)
+            @Html.DisplayFor(model => model.service.CpuCoolerPrice)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.VirusRemoval)
+            @Html.DisplayNameFor(model => model.service.VirusRemoval)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.VirusRemoval)
+            @Html.DisplayFor(model => model.service.VirusRemoval)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DataRecovery)
+            @Html.DisplayNameFor(model => model.service.DataRecovery)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DataRecovery)
+            @Html.DisplayFor(model => model.service.DataRecovery)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.InstallOs)
+            @Html.DisplayNameFor(model => model.service.InstallOs)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.InstallOs)
+            @Html.DisplayFor(model => model.service.InstallOs)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Labor)
+            @Html.DisplayNameFor(model => model.service.Labor)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Labor)
+            @Html.DisplayFor(model => model.service.Labor)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Comment)
+            @Html.DisplayNameFor(model => model.service.Comment)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Comment)
+            @Html.DisplayFor(model => model.service.Comment)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PaymentStatus)
+            @Html.DisplayNameFor(model => model.service.PaymentStatus)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PaymentStatus)
+            @Html.DisplayFor(model => model.service.PaymentStatus)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.WorkOrderDate)
+            @Html.DisplayNameFor(model => model.service.WorkOrderDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.WorkOrderDate)
+            @Html.DisplayFor(model => model.service.WorkOrderDate)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.WorkOrderStatus)
+            @Html.DisplayNameFor(model => model.service.WorkOrderStatus)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.WorkOrderStatus)
+            @Html.DisplayFor(model => model.service.WorkOrderStatus)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.service.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.service.Description)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PictureUpload)
+            @Html.DisplayNameFor(model => model.service.PictureUpload)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PictureUpload)
+            @Html.DisplayFor(model => model.service.PictureUpload)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })|
+    @Html.ActionLink("Edit", "Edit", new { id = Model.service.Id })|
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<label>SubTotal:</label>  $@ViewBag.SubTotal
+<br/>
+<label>Diagnostics:</label>  $@ViewBag.Diagnostics
+<br/>
+<label>Taxes:</label>  $@ViewBag.Taxes
+<br/>
+<label>Final Bill:</label>  $@ViewBag.TotalBill
+
+
