@@ -122,6 +122,29 @@ namespace ServiceShop.Controllers
             return View(cesVM);
         }
 
+        // GET: Services/Details/5
+        public ActionResult CustomerBill(int? id)
+        {
+            Service service = db.Services.Find(id);
+            //Service serviceTest = db.Services.Where(s => s.Id == id).Include(s => s.Employee).Include(s => s.Customer).FirstOrDefault();
+
+            CustomerEmployeeServiceVM cesVM = new CustomerEmployeeServiceVM();
+            cesVM.service = service;
+            cesVM.employee = db.Employees.Where(e => e.Id == service.EmployeeId).First();
+            cesVM.customer = db.Customers.Where(c => c.Id == service.CustomerId).First();
+            var SubTotal = Convert.ToDouble(service.MotherBoardPrice) + Convert.ToDouble(service.VideoCardPrice) + Convert.ToDouble(service.PowerSupplyPrice) + Convert.ToDouble(service.CpuCoolerPrice) + Convert.ToDouble(service.HardDrivePrice) + Convert.ToDouble(service.CasePrice) + Convert.ToDouble(service.MemoryPrice) + Convert.ToDouble(service.FanPrice) + Convert.ToDouble(service.CpuCoolerPrice) + Convert.ToDouble(service.VirusRemoval) + Convert.ToDouble(service.DataRecovery) + Convert.ToDouble(service.InstallOs) + Convert.ToDouble(service.Labor);
+
+            var Diagnostics = 40.00;
+            var Taxes = SubTotal * 0.056;
+            var TotalBill = SubTotal + Diagnostics + Taxes;
+            ViewBag.SubTotal = SubTotal;
+            ViewBag.Diagnostics = Diagnostics;
+            ViewBag.Taxes = Taxes;
+            ViewBag.TotalBill = TotalBill;
+
+            return View(cesVM);
+        }
+
         // GET: Services/Create
         public ActionResult Create()
         {

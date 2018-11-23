@@ -199,8 +199,9 @@
         <td>
             @Html.ActionLink("Edit", "EmployeeWorkOrder", new { id = item.Id }) |
             @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            @*@@Html.ActionLink("DetailsVM", "Details", "CustomerEmployeeServiceVMs", new { id = item.Id }, null) ... test *@
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+            @Html.ActionLink("Customer Bill", "CustomerBill", new { id = item.Id }) |
+
         </td>
     </tr>
 }

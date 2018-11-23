@@ -287,6 +287,8 @@
     <Content Include="Views\CustomerEmployeeServiceVMs\Create.cshtml" />
     <Content Include="Views\CustomerEmployeeServiceVMs\Edit.cshtml" />
     <Content Include="Views\CustomerEmployeeServiceVMs\Delete.cshtml" />
+    <Content Include="Views\Services\CustomerBill.cshtml" />
+    <Content Include="Views\Employees\EditRating.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

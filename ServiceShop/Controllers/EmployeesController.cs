@@ -120,7 +120,7 @@ namespace ServiceShop.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;
-                employee.ApplicationUserId = User.Identity.GetUserId();
+                //test employee.ApplicationUserId = User.Identity.GetUserId();
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -136,6 +136,41 @@ namespace ServiceShop.Controllers
             //    return View();
             //}
         }
+
+
+        // GET: Employees/EditRating/5
+        public ActionResult EditRating(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
+            {
+                return HttpNotFound();
+            }
+            return View(employee);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditRating([Bind(Include = "Id,Name,Email,Rating,ApplicationUserId")] Employee employee)
+        {
+            //int rateCounter = 0;
+            if (ModelState.IsValid)
+            {
+                var empId = employee.ApplicationUserId;
+                db.Entry(employee).State = EntityState.Modified;
+                //employee.ApplicationUserId = User.Identity.GetUserId();
+                employee.ApplicationUserId = empId;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(employee);
+        }
+
+
 
         // GET: Employees/Delete/5
         public ActionResult Delete(int? id)
