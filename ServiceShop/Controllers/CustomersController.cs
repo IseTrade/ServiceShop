@@ -175,5 +175,17 @@ namespace ServiceShop.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        // GET: Show map
+        [HttpGet]
+        public ActionResult Map()  //Showing google map and directions
+        { 
+
+            var UserId = User.Identity.GetUserId();
+            var cust = db.Customers.Where(c => c.ApplicationUserId == UserId).First();
+            return View();
+
+
+        }
     }
 }

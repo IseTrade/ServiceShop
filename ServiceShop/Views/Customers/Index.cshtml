@@ -71,7 +71,8 @@
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
                 @Html.ActionLink("Create Order", "CreateOrder", "Services", null, new { id = item.Id }) |
                 @Html.ActionLink("Show Order", "Index", "Services", null, new { id = item.Id }) |
-                @Html.ActionLink("Show Bill", "CreateOrder", "Services", null, new { id = item.Id })
+                @Html.ActionLink("Show Bill", "CreateOrder", "Services", null, new { id = item.Id }) |
+                @Html.ActionLink("Show Map", "Map", "Customers", null, new { id = item.Id }) |
             </td>
         </tr>
     }

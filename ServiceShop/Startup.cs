@@ -15,6 +15,7 @@ namespace ServiceShop
         {
             ConfigureAuth(app);
             CreateRoles();
+            app.MapSignalR();
         }
 
         private void CreateRoles()
