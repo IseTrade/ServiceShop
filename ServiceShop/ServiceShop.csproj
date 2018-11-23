@@ -199,6 +199,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerEmployeeServiceVM.cs" />
+    <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -289,6 +290,7 @@
     <Content Include="Views\CustomerEmployeeServiceVMs\Delete.cshtml" />
     <Content Include="Views\Services\CustomerBill.cshtml" />
     <Content Include="Views\Employees\EditRating.cshtml" />
+    <Content Include="Views\Home\Sent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

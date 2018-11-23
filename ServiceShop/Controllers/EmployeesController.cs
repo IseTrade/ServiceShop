@@ -146,6 +146,7 @@ namespace ServiceShop.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = db.Employees.Find(id);
+            var oldRate = employee.Rating;
             if (employee == null)
             {
                 return HttpNotFound();
@@ -160,10 +161,11 @@ namespace ServiceShop.Controllers
             //int rateCounter = 0;
             if (ModelState.IsValid)
             {
-                var empId = employee.ApplicationUserId;
+                
+                //var empId = employee.ApplicationUserId;
                 db.Entry(employee).State = EntityState.Modified;
-                //employee.ApplicationUserId = User.Identity.GetUserId();
-                employee.ApplicationUserId = empId;
+                var newRate = employee.Rating;
+                //employee.ApplicationUserId = empId;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
