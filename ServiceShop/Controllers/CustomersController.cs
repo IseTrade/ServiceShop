@@ -18,6 +18,7 @@ namespace ServiceShop.Controllers
         {
             db = new ApplicationDbContext();
             user = new ApplicationUser();
+
         }
 
         // GET: Customers
@@ -27,16 +28,20 @@ namespace ServiceShop.Controllers
             //var custList = db.Customers.ToList();
             //return View(custList);
 
-
             //customer.ApplicationUserId = User.Identity.GetUserId();
             //var cust = db.Customers.Where(c => c.Id == customer.Id).ToList();
             //return View(cust);
 
             var UserId = User.Identity.GetUserId();
             var cust = db.Customers.Where(c => c.ApplicationUserId == UserId).ToList();
+
+            //var address = cust.Select(a => a.Address).FirstOrDefault();
+            //var city = cust.Select(c => c.City).FirstOrDefault();
+            //var state = cust.Select(s => s.State).FirstOrDefault();
+
+            //ViewBag.StartAddress = address + ", " + city + ", " + state;//Valid
+
             return View(cust);
-
-
         }
 
         // GET: Customers
@@ -115,7 +120,7 @@ namespace ServiceShop.Controllers
 
         // POST: Customers/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]       
+        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Address,City,State,Zipcode,Phone,Email")] Customer customer)
         {
             //try
@@ -179,13 +184,24 @@ namespace ServiceShop.Controllers
         // GET: Show map
         [HttpGet]
         public ActionResult Map()  //Showing google map and directions
-        { 
+        {
+            //var UserId = User.Identity.GetUserId();
+            //var cust = db.Customers.Where(c => c.ApplicationUserId == UserId).First();
 
-            var UserId = User.Identity.GetUserId();
-            var cust = db.Customers.Where(c => c.ApplicationUserId == UserId).First();
-            return View();
+            var UserId = User.Identity.GetUserId(); //grabs id of person logged in if /Customers/Map is accessed
 
+            if (User.Identity.IsAuthenticated)
+            {
+                var cust = db.Customers.Where(c => c.ApplicationUserId == UserId).ToList();
 
+                var address = cust.Select(a => a.Address).FirstOrDefault();
+                var city = cust.Select(c => c.City).FirstOrDefault();
+                var state = cust.Select(s => s.State).FirstOrDefault();
+
+                ViewBag.StartAddress = address + ", " + city + ", " + state;//Valid
+                return View();
+            }
+            return Index();
         }
     }
 }

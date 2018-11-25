@@ -1,20 +1,12 @@
 ﻿
 @{
     Layout = null;
+    string startAddress = ViewBag.StartAddress;
+    if (!User.Identity.IsAuthenticated)
+    {
+        Response.Redirect("/");
+    }
 }
-
-@*<!DOCTYPE html>
-
-    <html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>Map</title>
-    </head>
-    <body>
-        <div>
-        </div>
-    </body>
-    </html>*@
 
 <!DOCTYPE html>
 <html>
@@ -50,76 +42,39 @@
             padding-left: 10px;
         }
     </style>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=KODE&callback=initMap"></script> @*//KODE*@
 </head>
 <body>
-    <div id="floating-panel">
-        <b>Start: </b>
-        <select id="start">
-            <option value="7221 w burleight st, milwaukee, wi">Business</option>
-            @*<option value="st louis, mo">St Louis</option>
-            <option value="joplin, mo">Joplin, MO</option>
-            <option value="oklahoma city, ok">Oklahoma City</option>
-            <option value="amarillo, tx">Amarillo</option>
-            <option value="gallup, nm">Gallup, NM</option>
-            <option value="flagstaff, az">Flagstaff, AZ</option>
-            <option value="winona, az">Winona</option>
-            <option value="kingman, az">Kingman</option>
-            <option value="barstow, ca">Barstow</option>
-            <option value="san bernardino, ca">San Bernardino</option>
-            <option value="los angeles, ca">Los Angeles</option>*@
-        </select>
-        <b>End: </b>
-        <select id="end">
-            <option value="303 N plankinton st, milwaukee, wi">DevCodeCamp</option>
-            <option value="st louis, mo">St Louis</option>
-            @*<option value="joplin, mo">Joplin, MO</option>
-            <option value="oklahoma city, ok">Oklahoma City</option>
-            <option value="amarillo, tx">Amarillo</option>
-            <option value="gallup, nm">Gallup, NM</option>
-            <option value="flagstaff, az">Flagstaff, AZ</option>
-            <option value="winona, az">Winona</option>
-            <option value="kingman, az">Kingman</option>
-            <option value="barstow, ca">Barstow</option>
-            <option value="san bernardino, ca">San Bernardino</option>
-            <option value="los angeles, ca">Los Angeles</option>*@
-        </select>
-    </div>
-    @*<div start="7221 w burleight st, milwaukee, wi"></div>
-    <div end="303 N plankinton st, milwaukee, wi"></div>*@
     <div id="map"></div>
     <script>
-      function initMap() {
-        var directionsService = new google.maps.DirectionsService;
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 7,
-          center: {lat: 41.85, lng: -87.65}
-        });
-        directionsDisplay.setMap(map);
+        var startAddress = "@startAddress";
+        const BUSINESSADDRESS = "7221 W Burleigh St, Milwaukee, WI";
 
-        var onChangeHandler = function() {
-          calculateAndDisplayRoute(directionsService, directionsDisplay);
-        };
-        document.getElementById('start').addEventListener('change', onChangeHandler);
-        document.getElementById('end').addEventListener('change', onChangeHandler);
-      }
+        function initMap() {
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer;
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 7,
+                center: { lat: 41.85, lng: -87.65 } //Milwaukee
+            });
+            directionsDisplay.setMap(map); //Show the map route
+            calculateAndDisplayRoute(directionsService, directionsDisplay);
+        }
 
-      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-        directionsService.route({
-          origin: document.getElementById('start').value,
-          destination: document.getElementById('end').value,
-          travelMode: 'DRIVING'
-        }, function(response, status) {
-          if (status === 'OK') {
-            directionsDisplay.setDirections(response);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
-      }
-    </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMFboAKkov3SqAGGDZGdBNBMGuGNt0NxY&callback=initMap">
+        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+            directionsService.route({
+                origin: startAddress,
+                destination: BUSINESSADDRESS,
+                travelMode: 'DRIVING' //Asume all transportation method is driving
+            }, function (response, status) {
+                if (status === 'OK') {
+                    //Success
+                    directionsDisplay.setDirections(response);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
     </script>
 </body>
 </html>

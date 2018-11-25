@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Linq;
 using System.Web.Mvc;
 using ServiceShop.Models;
+using Stripe;
 
 [assembly: OwinStartupAttribute(typeof(ServiceShop.Startup))]
 namespace ServiceShop

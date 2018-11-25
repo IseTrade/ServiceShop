@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Customer Bill";
+    
 }
 
 <center><bold></bold><h1>Customer Bill</h1><bold /></center>
@@ -271,17 +272,18 @@
 <br />
 <label>Final Bill:</label>  $@ViewBag.TotalBill
 <p>
-    <br /><br />
+    <br/>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.service.Id })|*@
     @*@Html.ActionLink("Back to List", "Index")*@
 
+    @Html.ActionLink(Model.customer.Name + ", Please Make Stripe Payment", "Stripe", "Home", new { id = Model.customer.Id, price = ViewBag.TotalBill }, null) <br/>
 
     @*@Html.DropDownListFor(m => m.employee.Rating, Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
-    <button type="button" onclick="alert(@Model.employee.Rating)">Submit Rating for Employee</button>
-    <button type="button" onclick="alert('Thank you for playing your bill')">Please Pay via Stripe Payment</button>
-    @Html.DisplayNameFor(model => model.employee.Rating)*@
+        <button type="button" onclick="alert(@Model.employee.Rating)">Submit Rating for Employee</button>
+        <button type="button" onclick="alert('Thank you for playing your bill')">Please Pay via Stripe Payment</button>
+        @Html.DisplayNameFor(model => model.employee.Rating)*@
 
-    @Html.ActionLink("Edit Rating", "EditRating", "Employees",new {id = Model.employee.Id}, null)|
+    @Html.ActionLink("Please Rate " + Model.employee.Name, "EditRating", "Employees", new { id = Model.employee.Id }, null)
 </p>
 
 @*=====================================================*@

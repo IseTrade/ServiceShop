@@ -14,6 +14,7 @@ namespace ServiceShop.Controllers
     {
         public ApplicationDbContext db;
         public ApplicationUser user;
+
         public ServicesController()
         {
             db = new ApplicationDbContext();
@@ -34,7 +35,6 @@ namespace ServiceShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateOrder([Bind(Include = "Id,WorkOrderDate,Description,PictureUpload")] Service service)
         {
-
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
@@ -42,13 +42,17 @@ namespace ServiceShop.Controllers
                 var tempEmp = db.Employees.Where(e => e.Email == "ua@gmail.com").FirstOrDefault();
                 service.CustomerId = currentCust.Id;
                 service.EmployeeId = tempEmp.Id;
+
+                //TODO: Insert Upload routines
+                //Get object from input
+                //Store to file stream
+                //Save file name to database
+
                 db.Services.Add(service);
                 db.SaveChanges();
                 //return RedirectToAction("Index");
                 return RedirectToAction("Index", "Customers", new { id = 11 });
-
             }
-
             return View("Index");
         }
 
@@ -67,7 +71,6 @@ namespace ServiceShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EmployeeWorkOrder([Bind(Include = "Id,MotherBoard,MotherBoardPrice,VideoCard,VideoCardPrice,PowerSupply,PowerSupplyPrice,Cpu,CpuPrice,HardDrive,HardDrivePrice,Case,CasePrice,Memory,MemoryPrice,Fan,FanPrice,CpuCooler,CpuCoolerPrice,VirusRemoval,DataRecovery,InstallOs,Labor,Comment,PaymentStatus,WorkOrderStatus,CustomerId,EmployeeId,WorkOrderDate,Description,PictureUpload")] Service service)
         {
-
             if (ModelState.IsValid)
             {
                 var userId = User.Identity.GetUserId();
@@ -83,9 +86,7 @@ namespace ServiceShop.Controllers
                 db.SaveChanges();
                 //return RedirectToAction("Index");
                 return RedirectToAction("Index", "Employees", new { id = 11 });
-
             }
-
             return View("Index");
         }
 
@@ -109,7 +110,7 @@ namespace ServiceShop.Controllers
             cesVM.service = service;
             cesVM.employee = db.Employees.Where(e => e.Id == service.EmployeeId).First();
             cesVM.customer = db.Customers.Where(c => c.Id == service.CustomerId).First();
-            var SubTotal = Convert.ToDouble(service.MotherBoardPrice) + Convert.ToDouble(service.VideoCardPrice) + Convert.ToDouble(service.PowerSupplyPrice) + Convert.ToDouble(service.CpuCoolerPrice) + Convert.ToDouble(service.HardDrivePrice)+ Convert.ToDouble(service.CasePrice) + Convert.ToDouble(service.MemoryPrice) + Convert.ToDouble(service.FanPrice) + Convert.ToDouble(service.CpuCoolerPrice) + Convert.ToDouble(service.VirusRemoval) + Convert.ToDouble(service.DataRecovery) + Convert.ToDouble(service.InstallOs) + Convert.ToDouble(service.Labor);
+            var SubTotal = Convert.ToDouble(service.MotherBoardPrice) + Convert.ToDouble(service.VideoCardPrice) + Convert.ToDouble(service.PowerSupplyPrice) + Convert.ToDouble(service.CpuCoolerPrice) + Convert.ToDouble(service.HardDrivePrice) + Convert.ToDouble(service.CasePrice) + Convert.ToDouble(service.MemoryPrice) + Convert.ToDouble(service.FanPrice) + Convert.ToDouble(service.CpuCoolerPrice) + Convert.ToDouble(service.VirusRemoval) + Convert.ToDouble(service.DataRecovery) + Convert.ToDouble(service.InstallOs) + Convert.ToDouble(service.Labor);
 
             var Diagnostics = 40.00;
             var Taxes = SubTotal * 0.056;
@@ -117,7 +118,8 @@ namespace ServiceShop.Controllers
             ViewBag.SubTotal = SubTotal;
             ViewBag.Diagnostics = Diagnostics;
             ViewBag.Taxes = Taxes;
-            ViewBag.TotalBill = TotalBill;
+            ViewBag.TotalBill = TotalBill;  //This needs to go to stripe payment
+            //TempData["TotalBill"] = TotalBill;
 
             return View(cesVM);
         }
@@ -140,7 +142,7 @@ namespace ServiceShop.Controllers
             ViewBag.SubTotal = SubTotal;
             ViewBag.Diagnostics = Diagnostics;
             ViewBag.Taxes = Taxes;
-            ViewBag.TotalBill = TotalBill;
+            ViewBag.TotalBill = TotalBill;//Actual price
 
             return View(cesVM);
         }
@@ -217,16 +219,6 @@ namespace ServiceShop.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            //try
-            //{
-            //    // TODO: Add delete logic here
-
-            //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
 
             {
                 Service service = db.Services.Find(id);
@@ -234,7 +226,6 @@ namespace ServiceShop.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
         }
     }
 }

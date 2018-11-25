@@ -1,0 +1,18 @@
+﻿@{
+    var totalBill = Convert.ToDouble(Request.QueryString["price"]);//Actual price
+    var totalBillInCents = totalBill.ToString().Replace(".", "");//Hacking Stripe
+}
+<form name="billingform" action="/Home/Charge" method="POST">
+    <article>
+        <label>Amount: $@totalBill</label>
+    </article>
+    <script src="https://checkout.stripe.com/checkout.js"
+            class="stripe-button"
+            @*data-key="@ViewBag.StripePublishKey"*@
+            data-key="pk_test_0lQ34beH613tWT30aT7ozNYs"
+            data-locale="auto"
+            data-description="Sample Charge"
+            data-amount="@totalBillInCents">
+    </script>
+    <input type="hidden" name="price" value="@totalBill" />
+</form>

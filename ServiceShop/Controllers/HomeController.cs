@@ -7,11 +7,52 @@ using System.Net;
 using System.Net.Mail;
 using ServiceShop.Models;
 using System.Threading.Tasks;
+using System.Configuration;
+using Stripe;
+
 
 namespace ServiceShop.Controllers
 {
     public class HomeController : Controller
-    {
+   {       
+
+        public ActionResult Stripe()
+        {
+            var stripePublishKey = ConfigurationManager.AppSettings["stripePublishableKey"];
+            ViewBag.StripePublishKey = stripePublishKey;
+            return View();
+        }
+
+        public ActionResult Charge(string stripeEmail, string stripeToken)
+        {
+            string totalAmount = Request.Form["price"].Replace(".","");//Convert to cents for stripe by removing decimals
+            int totalCents = Convert.ToInt32(totalAmount);
+
+            var customers = new CustomerService();
+            var charges = new ChargeService();
+
+            var customer = customers.Create(new CustomerCreateOptions
+            {
+                Email = stripeEmail,
+                SourceToken = stripeToken
+            });
+
+            var charge = charges.Create(new ChargeCreateOptions
+            {
+                Description = "Sample Charge",
+                Currency = "USD",
+                Amount = totalCents,
+                CustomerId = customer.Id
+            });
+
+            ViewBag.TotalBill = Convert.ToDouble(totalAmount) / 100;//send the amount back to success page
+
+            // further application specific code goes here
+
+            return View();
+        }
+
+        //=================================================================
         public ActionResult Chat()
         {
             return View();

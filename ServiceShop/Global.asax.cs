@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Stripe;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -16,6 +18,8 @@ namespace ServiceShop
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //StripeConfiguration.SetApiKey(ConfigurationManager.AppSettings["stripeSecretKey"]);
+            StripeConfiguration.SetApiKey("sk_test_2Fl12uNfIZkXHl436vXKQiw0");  //KODE
         }
     }
 }
