@@ -9,12 +9,15 @@ using ServiceShop.Models;
 using System.Threading.Tasks;
 using System.Configuration;
 using Stripe;
-
+using Microsoft.AspNet.Identity;
 
 namespace ServiceShop.Controllers
 {
     public class HomeController : Controller
-   {       
+   {
+        public ApplicationDbContext db;
+        public ApplicationUser user;
+
 
         public ActionResult Stripe()
         {
@@ -25,6 +28,8 @@ namespace ServiceShop.Controllers
 
         public ActionResult Charge(string stripeEmail, string stripeToken)
         {
+            db = new ApplicationDbContext();
+            user = new ApplicationUser();
             string totalAmount = Request.Form["price"].Replace(".","");//Convert to cents for stripe by removing decimals
             int totalCents = Convert.ToInt32(totalAmount);
 
@@ -46,6 +51,14 @@ namespace ServiceShop.Controllers
             });
 
             ViewBag.TotalBill = Convert.ToDouble(totalAmount) / 100;//send the amount back to success page
+
+            var custId = User.Identity.GetUserId();
+            var currentCust = db.Customers.Where(c => c.ApplicationUserId == custId).FirstOrDefault();
+            var currentService = db.Services.Where(s => s.CustomerId == currentCust.Id).SingleOrDefault();
+            currentService.PaymentStatus = "paid";
+            db.SaveChanges();  //Change payment status to paid once customer makes payment
+
+
 
             // further application specific code goes here
 

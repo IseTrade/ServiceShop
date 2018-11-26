@@ -1,6 +1,6 @@
 ﻿@{
-    var totalBill = Convert.ToDouble(Request.QueryString["price"]);//Actual price
-    var totalBillInCents = totalBill.ToString().Replace(".", "");//Hacking Stripe
+    var totalBill = Convert.ToDouble(Request.QueryString["price"]); //Actual price
+    var totalBillInCents = totalBill.ToString().Replace(".", ""); //Format for Stripe
 }
 <form name="billingform" action="/Home/Charge" method="POST">
     <article>

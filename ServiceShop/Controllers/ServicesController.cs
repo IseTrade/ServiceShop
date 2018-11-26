@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 
 namespace ServiceShop.Controllers
 {
@@ -33,26 +34,47 @@ namespace ServiceShop.Controllers
         // POST: Customers/CreateOrder
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateOrder([Bind(Include = "Id,WorkOrderDate,Description,PictureUpload")] Service service)
+        public ActionResult CreateOrder([Bind(Include = "Id,WorkOrderDate,Description,PictureUpload")] Service service, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                //Database Lookup Routines
                 var userId = User.Identity.GetUserId();
                 var currentCust = db.Customers.Where(c => c.ApplicationUserId == userId).FirstOrDefault();
                 var tempEmp = db.Employees.Where(e => e.Email == "ua@gmail.com").FirstOrDefault();
                 service.CustomerId = currentCust.Id;
                 service.EmployeeId = tempEmp.Id;
 
-                //TODO: Insert Upload routines
-                //Get object from input
-                //Store to file stream
-                //Save file name to database
+                //TODO:
+                string _fileName = Path.GetFileName(file.FileName);//Original file.ext
+                //string _fileExtn = Path.GetExtension(file.FileName);//.ext
+                string _newFileName = currentCust.Name.Replace(" ", "_") + "_" + _fileName;//fname_lname_filename.ext
+                string _filePath = Path.Combine(Server.MapPath("/UploadedFiles/"), _newFileName);//~/UploadedFiles/filename.ext
+                file.SaveAs(_filePath);//Save file to disk /UploadedFiles
 
-                db.Services.Add(service);
-                db.SaveChanges();
+                //Check if file exists for uploading
+                if (_filePath != null)
+                {
+                    service.PictureUpload = _newFileName;//String path to store in service object for updating
+                    ViewBag.Message = "File Uploaded!";
+                    ViewBag.LastImageUploaded = _filePath;//String path to return to view
+                }
+                else
+                {
+                    service.PictureUpload = "N/A";
+                    ViewBag.Message = "File Upload Failed!";
+                }
+
+                //Database Update Routines
+                db.Services.Add(service);//Updated record to update
+                db.SaveChanges();//Update
+
+                //Success Response Routines
                 //return RedirectToAction("Index");
                 return RedirectToAction("Index", "Customers", new { id = 11 });
             }
+
+            //TODO: RedirectToAction(""); // Send to another action -> view
             return View("Index");
         }
 
@@ -111,7 +133,7 @@ namespace ServiceShop.Controllers
             cesVM.employee = db.Employees.Where(e => e.Id == service.EmployeeId).First();
             cesVM.customer = db.Customers.Where(c => c.Id == service.CustomerId).First();
             var SubTotal = Convert.ToDouble(service.MotherBoardPrice) + Convert.ToDouble(service.VideoCardPrice) + Convert.ToDouble(service.PowerSupplyPrice) + Convert.ToDouble(service.CpuCoolerPrice) + Convert.ToDouble(service.HardDrivePrice) + Convert.ToDouble(service.CasePrice) + Convert.ToDouble(service.MemoryPrice) + Convert.ToDouble(service.FanPrice) + Convert.ToDouble(service.CpuCoolerPrice) + Convert.ToDouble(service.VirusRemoval) + Convert.ToDouble(service.DataRecovery) + Convert.ToDouble(service.InstallOs) + Convert.ToDouble(service.Labor);
-
+            //Convert.ToDouble needed to convert null to 0
             var Diagnostics = 40.00;
             var Taxes = SubTotal * 0.056;
             var TotalBill = SubTotal + Diagnostics + Taxes;

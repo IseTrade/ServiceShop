@@ -1,10 +1,10 @@
 ﻿@model ServiceShop.Models.Service
 
 @{
-    ViewBag.Title = "CreateOrder";
+    ViewBag.Title = "Create Order";
 }
 
-<h2>CreateOrder</h2>
+<h2>Create Order</h2>
 
 
 @using (Html.BeginForm("CreateOrder", "Services", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -211,8 +211,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.WorkOrderDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.WorkOrderDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.WorkOrderDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.WorkOrderDate, new { htmlAttributes = new { @class = "form-control datepicker" } })
+                @Html.ValidationMessageFor(model => model.WorkOrderDate, "", new { name="workorderdate", @class = "text-danger" })
             </div>
         </div>
 
@@ -233,9 +233,9 @@
         </div>
         <!-- Screenshot File Upload -->
         <div class="form-group">
-            <label class="control-label col-md-2">Screenshot Upload</label>
+            <label class="control-label col-md-2">File Upload (e.g. Screenshot/Video)</label>
             <div class="col-md-10">
-                @Html.TextBox("screenshot", "", new { type = "file", @class = "form-control-file" })
+                @Html.TextBox("file", "", new { type="file", name="file", @class = "form-control-file" })
             </div>
         </div>
         <div class="form-group">
@@ -254,3 +254,6 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script>
+    $('#WorkOrderDate').datepicker();
+</script>
