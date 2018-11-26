@@ -146,7 +146,7 @@ namespace ServiceShop.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Employee employee = db.Employees.Find(id);
-            var oldRate = employee.Rating;
+            var oldRate = employee.Rating; //testing
             if (employee == null)
             {
                 return HttpNotFound();
@@ -156,16 +156,18 @@ namespace ServiceShop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditRating([Bind(Include = "Id,Name,Email,Rating,ApplicationUserId")] Employee employee)
+        public ActionResult EditRating([Bind(Include = "Id,Name,Email,Rating,RatingData,RateTemp,ApplicationUserId")] Employee employee)
         {
             //int rateCounter = 0;
             if (ModelState.IsValid)
             {
-                
                 //var empId = employee.ApplicationUserId;
                 db.Entry(employee).State = EntityState.Modified;
-                var newRate = employee.Rating;
-                //employee.ApplicationUserId = empId;
+                employee.RatingData += employee.RateTemp; //Concats new rating to RatingData string
+                var rateCharArray = employee.RatingData.ToCharArray(); //Converts string to array of char
+                int[] rateIntArray = Array.ConvertAll(rateCharArray, c => (int)Char.GetNumericValue(c));
+                double rateAverage = rateIntArray.Average();
+                employee.Rating = rateAverage; //Passing calculated rate average to employee.Rating
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

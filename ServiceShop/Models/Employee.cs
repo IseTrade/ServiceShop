@@ -14,7 +14,9 @@ namespace ServiceShop.Models
         [Display(Name = "Employee Name")]
         public string Name { get; set; }
         public string Email { get; set; }
-        public double? Rating { get; set; }
+        public string RatingData { get; set; } //Mechanism for storing Rating values and count via concatenation
+        public string RateTemp { get; set; } //This is to hold the temporary rating value before concat to RatingData
+        public double? Rating { get; set; } //This is the calculated avg rating based on RatingData
 
         [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
