@@ -165,8 +165,8 @@ namespace ServiceShop.Controllers
                 db.Entry(employee).State = EntityState.Modified;
                 employee.RatingData += employee.RateTemp; //Concats new rating to RatingData string
                 var rateCharArray = employee.RatingData.ToCharArray(); //Converts string to array of char
-                int[] rateIntArray = Array.ConvertAll(rateCharArray, c => (int)Char.GetNumericValue(c));
-                double rateAverage = rateIntArray.Average();
+                int[] rateIntArray = Array.ConvertAll(rateCharArray, c => (int)Char.GetNumericValue(c)); //Converts CharArray to IntArray
+                double rateAverage = rateIntArray.Average(); //Get Average from IntArray
                 employee.Rating = rateAverage; //Passing calculated rate average to employee.Rating
                 db.SaveChanges();
                 return RedirectToAction("Index");
