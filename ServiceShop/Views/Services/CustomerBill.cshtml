@@ -272,6 +272,7 @@
 <br />
 <label>Final Bill:</label>  $@ViewBag.TotalBill
 <p>
+
     <br/>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.service.Id })|*@
     @*@Html.ActionLink("Back to List", "Index")*@
@@ -282,8 +283,9 @@
         <button type="button" onclick="alert(@Model.employee.Rating)">Submit Rating for Employee</button>
         <button type="button" onclick="alert('Thank you for playing your bill')">Please Pay via Stripe Payment</button>
         @Html.DisplayNameFor(model => model.employee.Rating)*@
-
+    
     @Html.ActionLink("Please Rate " + Model.employee.Name, "EditRating", "Employees", new { id = Model.employee.Id }, null)
+
 </p>
 
 @*=====================================================*@

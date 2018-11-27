@@ -114,9 +114,18 @@ namespace ServiceShop.Controllers
 
 
         //================================================
+        // GET: Services for particular customer only
+        public ActionResult Index2()
+        {
+            var custId = User.Identity.GetUserId();
+            var currentCust = db.Customers.Where(c => c.ApplicationUserId == custId).FirstOrDefault();
+            var currentService = db.Services.Where(s => s.CustomerId == currentCust.Id).ToList();
+
+            return View(currentService);
+        }
 
 
-        // GET: Services
+        // GET: ALL Services
         public ActionResult Index()
         {
             return View(db.Services.ToList());

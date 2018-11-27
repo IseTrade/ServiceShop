@@ -44,11 +44,22 @@ namespace ServiceShop.Controllers
             return View(cust);
         }
 
-        // GET: Customers
+        // GET: All Customers
         [HttpGet]
-        public ActionResult CustomerList()  // This brings up all customers for employee
+        public ActionResult CustomerList()  // This brings up all customers
         {
             var custList = db.Customers.ToList();
+            return View(custList);
+        }
+
+        // GET: All Customers for particular employee
+        [HttpGet]
+        public ActionResult CustomerList2()  // This brings up all customers for particular employee //TO DO
+        {
+            var empId = User.Identity.GetUserId();
+            var currentEmp = db.Employees.Where(e => e.ApplicationUserId == empId).SingleOrDefault();
+            var serv = db.Services.Where(s => s.EmployeeId == currentEmp.Id).ToList(); //List of orders for logged in employee
+            //var custList = db.Customers.Where(c => c.Id == serv.
             return View(custList);
         }
 
