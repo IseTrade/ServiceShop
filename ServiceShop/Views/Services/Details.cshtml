@@ -252,10 +252,7 @@
 
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.service.Id })|
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
 
 <label>SubTotal:</label>  $@ViewBag.SubTotal
 <br/>
@@ -264,3 +261,9 @@
 <label>Taxes:</label>  $@ViewBag.Taxes
 <br/>
 <label>Final Bill:</label>  $@ViewBag.TotalBill
+
+<p>
+
+    @Html.ActionLink("Edit", "Edit", new { id = Model.service.Id }, new { @class = "lnkEdit btn btn-primary" })
+    @Html.ActionLink("Back", "Index", null, new { @class = "lnkBack btn btn-primary" })
+</p>

@@ -14,10 +14,10 @@ using Microsoft.AspNet.Identity;
 namespace ServiceShop.Controllers
 {
     public class HomeController : Controller
-   {
+    {
         public ApplicationDbContext db;
         public ApplicationUser user;
-
+        //private static Random rnd;//Used for Live Chat Visitor#### randomname
 
         public ActionResult Stripe()
         {
@@ -30,7 +30,7 @@ namespace ServiceShop.Controllers
         {
             db = new ApplicationDbContext();
             user = new ApplicationUser();
-            string totalAmount = Request.Form["price"].Replace(".","");//Convert to cents for stripe by removing decimals
+            string totalAmount = Request.Form["price"].Replace(".", "");//Convert to cents for stripe by removing decimals
             int totalCents = Convert.ToInt32(totalAmount);
 
             var customers = new CustomerService();
@@ -57,19 +57,39 @@ namespace ServiceShop.Controllers
             var currentService = db.Services.Where(s => s.CustomerId == currentCust.Id).SingleOrDefault();
             currentService.PaymentStatus = "paid";
             db.SaveChanges();  //Change payment status to paid once customer makes payment
-
-
-
-            // further application specific code goes here
-
             return View();
         }
 
         //=================================================================
         public ActionResult Chat()
         {
+            //rnd = new Random();//Initialize seed value
+
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    //Detect the current logged in user
+            //    var userId = User.Identity.GetUserId();
+
+            //    //Determine which one is logged in
+            //    if (User.IsInRole("Customer"))
+            //    {
+            //        var currentCust = db.Customers.Where(c => c.ApplicationUserId == userId).FirstOrDefault();
+            //        ViewBag.AutomaticDetectionOrGenerateName = currentCust;
+            //    }
+            //    else if (User.IsInRole("Employee"))
+            //    {
+            //        var currentEmpl = db.Employees.Where(e => e.ApplicationUserId == userId).FirstOrDefault();
+            //        ViewBag.AutomaticDetectionOrGenerateName = currentEmpl;
+            //    }
+            //    else
+            //    {
+            //        //Set the name of the current customer as their live chat name
+            //        ViewBag.AutomaticDetectionOrGenerateName = "Visitor" + rnd.Next(1, 50); //Depends on TYPE of user
+            //    }
+            //}
             return View();
         }
+
         public ActionResult Index()
         {
             return View();

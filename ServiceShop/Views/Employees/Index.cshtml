@@ -41,13 +41,16 @@
             @Html.DisplayFor(modelItem => item.ApplicationUserId)
         </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
-            @Html.ActionLink("All Customer List", "CustomerList", "Customers", null, new { id = item.Id }) |
-            @Html.ActionLink("My Customer List", "CustomerList", "Customers", null, new { id = item.Id }) |
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("All Customer List", "CustomerList", "Customers", new { id = item.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("My Customer List", "CustomerList2", "Customers", new { id = item.Id }, new { @class = "btn btn-primary" })
             @*@Html.ActionLink("EmployeeWorkOrder", "EmployeeWorkOrder", "Services", null, new { id = item.Id }) |*@
-            @Html.ActionLink("Services", "Index", "Services", null, new { id = item.Id })
+            @Html.ActionLink("Completed Orders", "CustomerList3", "Customers", new { id = item.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Paid Orders", "CustomerList4", "Customers", new { id = item.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("My Work Orders", "Index3", "Services", new { id = item.Id }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("All Orders", "Index", "Services", new { id = item.Id }, new { @class = "btn btn-primary" })
         </td>
     </tr>
 }

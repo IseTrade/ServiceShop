@@ -131,6 +131,18 @@ namespace ServiceShop.Controllers
             return View(db.Services.ToList());
         }
 
+        // GET: Orders for logged in employee
+        public ActionResult Index3()
+        {
+            var userId = User.Identity.GetUserId();
+            var currentEmp = db.Employees.Where(e => e.ApplicationUserId == userId).FirstOrDefault();//logged in emp
+            var employeeOrders = db.Services.Where(s => s.EmployeeId == currentEmp.Id).ToList();//Listing from services table where empid = current logged in id
+
+            return View("~/Views/Services/Index.cshtml", employeeOrders);
+        }
+
+
+
         // GET: Services/Details/5
         public ActionResult Details(int? id)
         {
@@ -201,26 +213,51 @@ namespace ServiceShop.Controllers
         }
 
         // GET: Services/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Service service = db.Services.Find(id);
+            if (service == null)
+            {
+                return HttpNotFound();
+            }
+            return View(service);
         }
 
         // POST: Services/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "Id,MotherBoard,MotherBoardPrice,VideoCard,VideoCardPrice,PowerSupply,PowerSupplyPrice,Cpu,CpuPrice,HardDrive,HardDrivePrice,Case,CasePrice,Memory,MemoryPrice,Fan,FanPrice,CpuCooler,CpuCoolerPrice,VirusRemoval,DataRecovery,InstallOs,Labor,Comment,PaymentStatus,WorkOrderStatus,CustomerId,EmployeeId,WorkOrderDate,Description,PictureUpload")] Service service)
         {
-            try
-            {
-                // TODO: Add update logic here
 
+            //    return RedirectToAction("Index");
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(service).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(service);
         }
+
+        //[HttpPost]
+        //public ActionResult Edit(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add update logic here
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: Services/Delete/5
         public ActionResult Delete(int? id)

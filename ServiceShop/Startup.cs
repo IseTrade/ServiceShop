@@ -25,13 +25,13 @@ namespace ServiceShop
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             if (!roleManager.RoleExists("Employee"))
             {
-                var employeeRole = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                var employeeRole = new IdentityRole();
                 employeeRole.Name = "Employee";
                 roleManager.Create(employeeRole);
             }
             if (!roleManager.RoleExists("Customer"))
             {
-                var customerRole = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                var customerRole = new IdentityRole();
                 customerRole.Name = "Customer";
                 roleManager.Create(customerRole);
             }

@@ -24,7 +24,7 @@ namespace ServiceShop.Controllers
             user = new ApplicationUser();
         }
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index() //Shows logged in employee
         {
             //var empList = db.Employees.ToList();
             //return View(empList);
@@ -34,13 +34,19 @@ namespace ServiceShop.Controllers
 
         }
 
+        [HttpGet]
+        public ActionResult Index2() //Shows all employees
+        {
+            var empList = db.Employees.ToList();
+            return View(empList);
+        }
         //[HttpGet]
         //public ActionResult CustomerList(Employee employee)
         //{
         //    currentUserId= User.Identity.GetUserId();
         //    var employee = db.Employees.Where(e => e.ApplicationUserId == currentUserId).FirstOrDefault();
         //    var customerList = db.Customers.Where(c => c.Id == employee.Id).ToList();
-          
+
         //    return View(customerList);
         //    //test
         //}

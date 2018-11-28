@@ -52,15 +52,42 @@ namespace ServiceShop.Controllers
             return View(custList);
         }
 
-        // GET: All Customers for particular employee
+        // GET: All Customers for the current logged in employee i mean from intention piont of view
         [HttpGet]
-        public ActionResult CustomerList2()  // This brings up all customers for particular employee //TO DO
+        public ActionResult CustomerList2()
         {
-            var empId = User.Identity.GetUserId();
-            var currentEmp = db.Employees.Where(e => e.ApplicationUserId == empId).SingleOrDefault();
-            var serv = db.Services.Where(s => s.EmployeeId == currentEmp.Id).ToList(); //List of orders for logged in employee
-            //var custList = db.Customers.Where(c => c.Id == serv.
-            return View(custList);
+            //1. Get current employeeid
+            var employeeId = User.Identity.GetUserId(); //Passed
+
+            //2. Lookup in services table for all service.employeeId = currentemployee.id -> list (1, 2, 3)
+            var currentEmployee = db.Employees.Where(e => e.ApplicationUserId == employeeId).FirstOrDefault(); //Passed
+            var currentEmployeeServices = db.Services.Where(s => s.EmployeeId == currentEmployee.Id).Include(s => s.Customer).Select(s => s.Customer).ToList(); //Passed
+
+            //3. Lookup in customers table for all id's IN step 2.
+            //dynamic arrList = currentEmployeeServices.Select(cES => cES.Customer).ToList();
+            //var currentEmployeeCustomersList = db.Customers.Where(c => c.In(arrList)).ToList();
+
+            //4. List -> View
+            //return View(currentEmployeeServices);
+            return View("~/Views/Customers/CustomerList.cshtml", currentEmployeeServices);
+        }
+
+        [HttpGet]
+        public ActionResult CustomerList3() //Customers with Completed Orders
+        {
+
+            var completedCustomers = db.Services.Where(s => s.WorkOrderStatus == "completed").Include(s => s.Customer).Select(s => s.Customer).ToList();
+
+            return View("~/Views/Customers/CustomerList.cshtml", completedCustomers);
+        }
+
+        [HttpGet]
+        public ActionResult CustomerList4() //Paid Customers
+        {
+
+            var paidCustomers = db.Services.Where(s => s.PaymentStatus == "paid").Include(s => s.Customer).Select(s => s.Customer).ToList();
+
+            return View("~/Views/Customers/CustomerList.cshtml",paidCustomers);
         }
 
         // GET: Customers/Details/5
@@ -93,16 +120,9 @@ namespace ServiceShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Address,City,State,Zipcode,Phone,Email")] Customer customer)
         {
-            //try
-            //{
-            //    // TODO: Add insert logic here
 
             //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+
             if (ModelState.IsValid)
             {
                 customer.ApplicationUserId = User.Identity.GetUserId();
@@ -134,16 +154,9 @@ namespace ServiceShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Address,City,State,Zipcode,Phone,Email")] Customer customer)
         {
-            //try
-            //{
-            //    // TODO: Add update logic here
 
             //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+
             if (ModelState.IsValid)
             {
                 db.Entry(customer).State = EntityState.Modified;
@@ -174,16 +187,9 @@ namespace ServiceShop.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
         {
-            //try
-            //{
-            //    // TODO: Add delete logic here
 
             //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
+
             {
                 Customer customer = db.Customers.Find(id);
                 db.Customers.Remove(customer);
@@ -196,8 +202,6 @@ namespace ServiceShop.Controllers
         [HttpGet]
         public ActionResult Map()  //Showing google map and directions
         {
-            //var UserId = User.Identity.GetUserId();
-            //var cust = db.Customers.Where(c => c.ApplicationUserId == UserId).First();
 
             var UserId = User.Identity.GetUserId(); //grabs id of person logged in if /Customers/Map is accessed
 
