@@ -98,15 +98,10 @@ namespace ServiceShop.Controllers
                 var userId = User.Identity.GetUserId();
                 var currentEmp = db.Employees.Where(e => e.ApplicationUserId == userId).FirstOrDefault();
                 var tempEmp = db.Employees.Where(e => e.Email == "ua@gmail.com").SingleOrDefault();
-                //var currentCust = db.Customers.Where(c => c.Id == service.CustomerId).FirstOrDefault();
-                //var currentServ = db.Services.Where(s => s.CustomerId == currentCust.Id).SingleOrDefault();
-                //service.CustomerId = currentCust.Id;
-                //service.EmployeeId = tempEmp.Id;
+
                 service.EmployeeId = currentEmp.Id;
-                //db.Services.Add(service);
                 db.Entry(service).State = EntityState.Modified;
                 db.SaveChanges();
-                //return RedirectToAction("Index");
                 return RedirectToAction("Index", "Employees", new { id = 11 });
             }
             return View("Index");
@@ -123,7 +118,6 @@ namespace ServiceShop.Controllers
 
             return View(currentService);
         }
-
 
         // GET: ALL Services
         public ActionResult Index()
@@ -244,33 +238,9 @@ namespace ServiceShop.Controllers
             return View(service);
         }
 
-        //[HttpPost]
-        //public ActionResult Edit(int id, FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
-
-        // GET: Services/Delete/5
         public ActionResult Delete(int? id)
         {
-            //Service service = db.Services.Find(id);
-            ////Service serviceTest = db.Services.Where(s => s.Id == id).Include(s => s.Employee).Include(s => s.Customer).FirstOrDefault();
 
-            //CustomerEmployeeServiceVM cesVM = new CustomerEmployeeServiceVM();
-            //cesVM.service = service;
-            //cesVM.employee = db.Employees.Where(e => e.Id == service.EmployeeId).First();
-            //cesVM.customer = db.Customers.Where(c => c.Id == service.CustomerId).First();
-
-            //return View(cesVM);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

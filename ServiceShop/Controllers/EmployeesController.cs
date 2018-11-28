@@ -26,8 +26,7 @@ namespace ServiceShop.Controllers
         [HttpGet]
         public ActionResult Index() //Shows logged in employee
         {
-            //var empList = db.Employees.ToList();
-            //return View(empList);
+
             var UserId = User.Identity.GetUserId();
             var emp = db.Employees.Where(c => c.ApplicationUserId == UserId).ToList();
             return View(emp);
@@ -40,17 +39,7 @@ namespace ServiceShop.Controllers
             var empList = db.Employees.ToList();
             return View(empList);
         }
-        //[HttpGet]
-        //public ActionResult CustomerList(Employee employee)
-        //{
-        //    currentUserId= User.Identity.GetUserId();
-        //    var employee = db.Employees.Where(e => e.ApplicationUserId == currentUserId).FirstOrDefault();
-        //    var customerList = db.Customers.Where(c => c.Id == employee.Id).ToList();
 
-        //    return View(customerList);
-        //    //test
-        //}
-        // GET: Employees/Details/5
         [HttpGet]
         public ActionResult Details(int? id)
         {
@@ -91,16 +80,7 @@ namespace ServiceShop.Controllers
             }
 
             return View(employee);
-            //try
-            //{
-            //    // TODO: Add insert logic here
 
-            //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
         }
 
         // GET: Employees/Edit/5
@@ -131,16 +111,7 @@ namespace ServiceShop.Controllers
                 return RedirectToAction("Index");
             }
             return View(employee);
-            //try
-            //{
-            //    // TODO: Add update logic here
 
-            //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
         }
 
 
@@ -181,7 +152,6 @@ namespace ServiceShop.Controllers
         }
 
 
-
         // GET: Employees/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -206,16 +176,7 @@ namespace ServiceShop.Controllers
             db.Employees.Remove(employee);
             db.SaveChanges();
             return RedirectToAction("Index");
-            //try
-            //{
-            //    // TODO: Add delete logic here
 
-            //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}
         }
     }
 }

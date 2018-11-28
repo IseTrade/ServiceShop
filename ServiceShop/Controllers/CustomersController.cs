@@ -25,21 +25,9 @@ namespace ServiceShop.Controllers
         [HttpGet]
         public ActionResult Index() //This brings up only customer who's currently logged in.
         {
-            //var custList = db.Customers.ToList();
-            //return View(custList);
-
-            //customer.ApplicationUserId = User.Identity.GetUserId();
-            //var cust = db.Customers.Where(c => c.Id == customer.Id).ToList();
-            //return View(cust);
 
             var UserId = User.Identity.GetUserId();
             var cust = db.Customers.Where(c => c.ApplicationUserId == UserId).ToList();
-
-            //var address = cust.Select(a => a.Address).FirstOrDefault();
-            //var city = cust.Select(c => c.City).FirstOrDefault();
-            //var state = cust.Select(s => s.State).FirstOrDefault();
-
-            //ViewBag.StartAddress = address + ", " + city + ", " + state;//Valid
 
             return View(cust);
         }
@@ -52,7 +40,7 @@ namespace ServiceShop.Controllers
             return View(custList);
         }
 
-        // GET: All Customers for the current logged in employee i mean from intention piont of view
+        // GET: All Customers for the current logged in employee
         [HttpGet]
         public ActionResult CustomerList2()
         {
@@ -63,11 +51,6 @@ namespace ServiceShop.Controllers
             var currentEmployee = db.Employees.Where(e => e.ApplicationUserId == employeeId).FirstOrDefault(); //Passed
             var currentEmployeeServices = db.Services.Where(s => s.EmployeeId == currentEmployee.Id).Include(s => s.Customer).Select(s => s.Customer).ToList(); //Passed
 
-            //3. Lookup in customers table for all id's IN step 2.
-            //dynamic arrList = currentEmployeeServices.Select(cES => cES.Customer).ToList();
-            //var currentEmployeeCustomersList = db.Customers.Where(c => c.In(arrList)).ToList();
-
-            //4. List -> View
             //return View(currentEmployeeServices);
             return View("~/Views/Customers/CustomerList.cshtml", currentEmployeeServices);
         }
