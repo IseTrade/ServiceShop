@@ -59,7 +59,7 @@ namespace ServiceShop.Controllers
         public ActionResult CustomerList3() //Customers with Completed Orders
         {
 
-            var completedCustomers = db.Services.Where(s => s.WorkOrderStatus == "completed").Include(s => s.Customer).Select(s => s.Customer).ToList();
+            var completedCustomers = db.Services.Where(s => s.WorkOrderStatus == "Completed").Include(s => s.Customer).Select(s => s.Customer).ToList();
 
             return View("~/Views/Customers/CustomerList.cshtml", completedCustomers);
         }
@@ -68,7 +68,7 @@ namespace ServiceShop.Controllers
         public ActionResult CustomerList4() //Paid Customers
         {
 
-            var paidCustomers = db.Services.Where(s => s.PaymentStatus == "paid").Include(s => s.Customer).Select(s => s.Customer).ToList();
+            var paidCustomers = db.Services.Where(s => s.PaymentStatus == "Paid").Include(s => s.Customer).Select(s => s.Customer).ToList();
 
             return View("~/Views/Customers/CustomerList.cshtml",paidCustomers);
         }

@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Customer Bill";
-    
+
 }
 
 <center><bold></bold><h1>Customer Bill</h1><bold /></center>
@@ -12,6 +12,7 @@
     <h4>This is the detailed work order and your final bill.  You can pay when you pick up or by Stripe payment. Thank you for your patronage.</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
             @Html.DisplayNameFor(model => model.customer.Name)
         </dt>
@@ -253,8 +254,9 @@
         </dd>
 
         <dd>
-            <img src="/UploadedFiles/@Html.DisplayFor(model => model.service.PictureUpload)" width="50%" height="50%" />
+            <img src="/UploadedFiles/@Html.DisplayFor(model => model.service.PictureUpload)" width="45%" height="45%" />
         </dd>
+        
     </dl>
 
 </div>
@@ -272,7 +274,7 @@
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.service.Id })|*@
     @*@Html.ActionLink("Back to List", "Index")*@
 
-    @Html.ActionLink(Model.customer.Name + ", Please Make Stripe Payment", "Stripe", "Home", new { id = Model.customer.Id, price = ViewBag.TotalBill }, new { @class = "lnkBack btn btn-warning" }) <br />
+    @Html.ActionLink(Model.customer.Name + ", Please Make Stripe Payment", "Stripe", "Home", new { id = Model.customer.Id, price = ViewBag.TotalBill }, new { @class = "lnkBack btn btn-primary" }) <br />
 
     @*@Html.DropDownListFor(m => m.employee.Rating, Enumerable.Range(1, 10).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
         <button type="button" onclick="alert(@Model.employee.Rating)">Submit Rating for Employee</button>

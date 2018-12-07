@@ -55,7 +55,7 @@ namespace ServiceShop.Controllers
             var custId = User.Identity.GetUserId();
             var currentCust = db.Customers.Where(c => c.ApplicationUserId == custId).FirstOrDefault();
             var currentService = db.Services.Where(s => s.CustomerId == currentCust.Id).SingleOrDefault();
-            currentService.PaymentStatus = "paid";
+            currentService.PaymentStatus = "Paid";
             db.SaveChanges();  //Change payment status to paid once customer makes payment
             return View();
         }
