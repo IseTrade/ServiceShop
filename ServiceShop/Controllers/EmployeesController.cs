@@ -14,8 +14,8 @@ namespace ServiceShop.Controllers
 {
     public class EmployeesController : Controller
     {
-        // GET: Employees
 
+        // GET: Employees
         public ApplicationDbContext db;
         public ApplicationUser user;
         public EmployeesController()
@@ -144,7 +144,7 @@ namespace ServiceShop.Controllers
                 var rateCharArray = employee.RatingData.ToCharArray(); //Converts string to array of char
                 int[] rateIntArray = Array.ConvertAll(rateCharArray, c => (int)Char.GetNumericValue(c)); //Converts CharArray to IntArray
                 double rateAverage = rateIntArray.Average(); //Get Average from IntArray
-                employee.Rating = rateAverage; //Passing calculated rate average to employee.Rating
+                employee.Rating = Math.Round(rateAverage, 2); //Passing calculated rate average to employee.Rating
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
